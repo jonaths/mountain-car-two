@@ -5,6 +5,7 @@ import numpy as np
 import sys
 import tensorflow as tf
 import collections
+from lib.MyEnv import MyEnv
 
 import sklearn.pipeline
 import sklearn.preprocessing
@@ -18,12 +19,13 @@ from sklearn.kernel_approximation import RBFSampler
 
 matplotlib.style.use('ggplot')
 
-env = gym.envs.make("MountainCarContinuous-v0")
-print env.observation_space.sample()
+# env = gym.envs.make("MountainCarContinuous-v0")
+env = MyEnv("MountainCarContinuous-v0", 100)
+print env.action_space().low[0]
 
 # Feature Preprocessing: Normalize to zero mean and unit variance
 # We use a few samples from the observation space to do this
-observation_examples = np.array([env.observation_space.sample() for x in range(10000)])
+observation_examples = np.array([env.observation_space_sample() for x in range(10000)])
 scaler = sklearn.preprocessing.StandardScaler()
 scaler.fit(observation_examples)
 
@@ -80,7 +82,7 @@ class PolicyEstimator():
             # muestrea un valor con la distribucion anterior
             self.action = self.normal_dist._sample_n(1)
             # clip
-            self.action = tf.clip_by_value(self.action, env.action_space.low[0], env.action_space.high[0])
+            self.action = tf.clip_by_value(self.action, env.action_space().low[0], env.action_space().high[0])
 
             # Loss and train op
             self.loss = -self.normal_dist.log_prob(self.action) * self.target
@@ -93,12 +95,7 @@ class PolicyEstimator():
 
     def predict(self, state, sess=None):
         sess = sess or tf.get_default_session()
-        print "XXX"
-        print state
         state = featurize_state(state)
-        print "YYY"
-        print state
-        sys.exit(0)
         return sess.run(self.action, {self.state: state})
 
     def update(self, state, target, action, sess=None):
