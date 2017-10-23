@@ -5,7 +5,7 @@ from collections import namedtuple
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
-EpisodeStats = namedtuple("Stats", ["episode_lengths", "episode_rewards"])
+EpisodeStats = namedtuple("Stats", ["episode_lengths", "episode_rewards", "episode_spent"])
 
 
 def plot_cost_to_go_mountain_car(env, estimator, num_tiles=20):
@@ -74,7 +74,8 @@ def plot_episode_stats(stats, smoothing_window=10, noshow=False):
 
     # Plot the episode reward over time
     fig2 = plt.figure(figsize=(10, 5))
-    rewards_smoothed = pd.Series(stats.episode_rewards).rolling(smoothing_window, min_periods=smoothing_window).mean()
+    rewards_smoothed = pd.Series(
+        stats.episode_rewards).rolling(smoothing_window, min_periods=smoothing_window).mean()
     plt.plot(rewards_smoothed)
     plt.xlabel("Episode")
     plt.ylabel("Episode Reward (Smoothed)")
@@ -95,4 +96,15 @@ def plot_episode_stats(stats, smoothing_window=10, noshow=False):
     else:
         plt.show(fig3)
 
-    return fig1, fig2, fig3
+    # Plot cumm budget spent
+    fig4 = plt.figure(figsize=(10, 5))
+    plt.plot(np.cumsum(stats.episode_spent), np.arange(len(stats.episode_spent)))
+    plt.xlabel("Time Steps")
+    plt.ylabel("Episode")
+    plt.title("Cummulative budget spent")
+    if noshow:
+        plt.close(fig4)
+    else:
+        plt.show(fig4)
+
+    return fig1, fig2, fig3, fig4

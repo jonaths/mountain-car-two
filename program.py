@@ -162,9 +162,11 @@ def actor_critic(env, estimator_policy, estimator_value, num_episodes, discount_
     # Keeps track of useful statistics
     stats = plotting.EpisodeStats(
         episode_lengths=np.zeros(num_episodes),
-        episode_rewards=np.zeros(num_episodes))
+        episode_rewards=np.zeros(num_episodes),
+        episode_spent=np.zeros(num_episodes))
 
-    Transition = collections.namedtuple("Transition", ["state", "action", "reward", "next_state", "done"])
+    Transition = collections.namedtuple(
+        "Transition", ["state", "action", "reward", "next_state", "done"])
 
     for i_episode in range(num_episodes):
         # Reset the environment and pick the fisrst action
@@ -179,7 +181,7 @@ def actor_critic(env, estimator_policy, estimator_value, num_episodes, discount_
 
             # Take a step
             action = estimator_policy.predict(state)
-            next_state, reward, done, _ = env.step(action)
+            next_state, reward, done, _ = env.step(action, i_episode, t)
 
             # Keep track of the transition
             episode.append(Transition(
@@ -206,6 +208,8 @@ def actor_critic(env, estimator_policy, estimator_value, num_episodes, discount_
                 t, i_episode + 1, num_episodes, stats.episode_rewards[i_episode - 1]))
 
             if done:
+                # agrega el total gastado para el episodio
+                stats.episode_spent[i_episode] = env.calculate_spent()
                 break
 
             state = next_state
