@@ -3,9 +3,10 @@ import numpy as np
 import pandas as pd
 from collections import namedtuple
 from matplotlib import pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+import sys
 
 EpisodeStats = namedtuple("Stats", ["episode_lengths", "episode_rewards", "episode_spent"])
+dir = 'results'
 
 
 def plot_cost_to_go_mountain_car(env, estimator, num_tiles=20):
@@ -60,22 +61,32 @@ def plot_value_function(V, title="Value Function"):
     plot_surface(X, Y, Z_ace, "{} (Usable Ace)".format(title))
 
 
-def plot_episode_stats(stats, smoothing_window=10, noshow=False):
+def plot_episode_stats(stats, label = 'fig', smoothing_window=10, noshow=False):
     # Plot the episode length over time
+
+    print "Episode Length over Time"
+    print stats.episode_lengths
+    print stats.episode_lengths.mean(axis=0)
+
     fig1 = plt.figure(figsize=(10, 5))
-    plt.plot(stats.episode_lengths)
+    plt.plot(stats.episode_lengths.mean(axis=0))
     plt.xlabel("Episode")
     plt.ylabel("Episode Length")
     plt.title("Episode Length over Time")
     if noshow:
         plt.close(fig1)
     else:
-        plt.show(fig1)
+        fig1.savefig(dir + '/length-vs-time-' + label + '.png')
+        plt.close(fig1)
 
     # Plot the episode reward over time
     fig2 = plt.figure(figsize=(10, 5))
-    rewards_smoothed = pd.Series(
-        stats.episode_rewards).rolling(smoothing_window, min_periods=smoothing_window).mean()
+
+    print "Episode Reward over Time (Smoothed over window size {})".format(smoothing_window)
+    print stats.episode_rewards
+    print stats.episode_rewards.mean(axis=0)
+
+    rewards_smoothed = pd.Series(stats.episode_rewards.mean(axis=0)).rolling(smoothing_window, min_periods=smoothing_window).mean()
     plt.plot(rewards_smoothed)
     plt.xlabel("Episode")
     plt.ylabel("Episode Reward (Smoothed)")
@@ -83,28 +94,44 @@ def plot_episode_stats(stats, smoothing_window=10, noshow=False):
     if noshow:
         plt.close(fig2)
     else:
-        plt.show(fig2)
+        fig2.savefig(dir + '/reward-vs-time-' + label + '.png')
+        plt.close(fig2)
 
     # Plot time steps and episode number
+
+    print "Episode per time step"
+    print stats.episode_lengths
+    print stats.episode_lengths.mean(axis=0)
+
+
     fig3 = plt.figure(figsize=(10, 5))
-    plt.plot(np.cumsum(stats.episode_lengths), np.arange(len(stats.episode_lengths)))
+    plt.plot(np.cumsum(stats.episode_lengths.mean(axis=0)), np.arange(len(stats.episode_lengths[0])))
     plt.xlabel("Time Steps")
     plt.ylabel("Episode")
     plt.title("Episode per time step")
     if noshow:
         plt.close(fig3)
     else:
-        plt.show(fig3)
+        fig3.savefig(dir + '/episode-vs-time-' + label + '.png')
+        plt.close(fig3)
+
+
 
     # Plot cumm budget spent
     fig4 = plt.figure(figsize=(10, 5))
-    plt.plot(np.cumsum(stats.episode_spent), np.arange(len(stats.episode_spent)))
-    plt.xlabel("Time Steps")
-    plt.ylabel("Episode")
+
+    print "Cummulative budget spent"
+    print stats.episode_spent
+    print stats.episode_spent.mean(axis=0)
+
+    plt.plot(np.cumsum(stats.episode_spent.mean(axis=0)))
+    plt.xlabel("Episode")
+    plt.ylabel("Budget")
     plt.title("Cummulative budget spent")
     if noshow:
         plt.close(fig4)
     else:
-        plt.show(fig4)
+        fig4.savefig(dir + '/cumm-budget-' + label + '.png')
+        plt.close(fig4)
 
     return fig1, fig2, fig3, fig4

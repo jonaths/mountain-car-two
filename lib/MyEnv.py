@@ -64,5 +64,6 @@ class MyEnv:
         :return:
         """
         random_budget = random.uniform(0, self.init_budget)
-        return np.append(self.env.observation_space.sample(), np.array([random_budget]))
+        return np.append(
+            self.env.observation_space.sample(), np.array([random_budget]))
         # return self.env.observation_space.sample()
