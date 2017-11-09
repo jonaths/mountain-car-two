@@ -3,6 +3,7 @@ import sys
 import numpy as np
 import random
 import logging
+import math
 
 LOG_FILENAME = 'example.log'
 logging.basicConfig(filename=LOG_FILENAME, level=logging.INFO)
@@ -32,6 +33,10 @@ class MyEnv:
     def step(self, action, i_episode=0, t=1):
 
         # realiza el paso del env
+        # Hasta aqui si
+
+
+
         next_state, reward, done, c = self.env.step(action)
 
         # Actualiza el presupuesto con la recompensa actual
@@ -39,6 +44,16 @@ class MyEnv:
 
         # a next_state le agrega el presupuesto
         next_state = np.append(next_state, np.array([self.budget]))
+
+        if +0.80 <= action[0] < +0.90:
+            position = next_state[0]
+            if 0.35 <= position < 0.45:
+                reward = 50 - math.pow(action[0], 2) * 0.1
+                done = True
+            else:
+                pass
+        else:
+            pass
 
         # procesa done
         done = done or self.budget <= 0

@@ -182,7 +182,7 @@ def run(budget, episodes):
             # One step in the environment
             for t in itertools.count():
 
-                # env.render()
+                env.render()
 
                 # Take a step
                 action = estimator_policy.predict(state)
