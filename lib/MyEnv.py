@@ -30,21 +30,29 @@ class MyEnv:
         return self.env.render()
 
     def step(self, action, i_episode=0, t=1):
+
         # realiza el paso del env
         next_state, reward, done, c = self.env.step(action)
+
+        # Actualiza el presupuesto con la recompensa actual
+        self.update_budget(reward)
+
         # a next_state le agrega el presupuesto
-        current_budget = self.update_budget(reward)
-        next_state = np.append(next_state, np.array([current_budget]))
-        # regresa done si el presupuesto es menor o igual a cero
-        done = done or current_budget <= 0
+        next_state = np.append(next_state, np.array([self.budget]))
+
+        # procesa done
+        done = done or self.budget <= 0
+
+        # logea informacion
         local_logger.info(
             ' ' +
             str(i_episode).zfill(4) + ' ' +
             str(t).zfill(4) + ' ' +
             "{:.14f}".format(reward) + ' ' +
-            "{:.14f}".format(current_budget) + ' ' +
+            "{:.14f}".format(self.budget) + ' ' +
             ("1" if done else "0")
         )
+
         # regresa la tupla
         return next_state, reward, done, c
 

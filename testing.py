@@ -5,8 +5,8 @@ import sys
 import pandas as pd
 
 num_episodes = 50
-budgets = [40, 20]
-reps = 20
+budgets = [80]
+reps = 3
 
 results = []
 
@@ -56,7 +56,7 @@ def load_stats(file_name='test.npy'):
 # for b in budgets:
 #     run_episodes({'budget': b, 'a':1})
 
-filename = 'a-1_budget-020'
+filename = 'a-1_budget-100'
 
 stats_array_loaded = load_stats(filename)
 
