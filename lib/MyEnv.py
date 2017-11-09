@@ -47,7 +47,7 @@ class MyEnv:
 
         if +0.80 <= action[0] < +0.90:
             position = next_state[0]
-            if 0.35 <= position < 0.45:
+            if 0.25 <= position < 0.35:
                 reward = 50 - math.pow(action[0], 2) * 0.1
                 done = True
             else:

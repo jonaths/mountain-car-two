@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="5864eba6-6f9f-4bf9-bea9-b6a02b127a75" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/program.py" afterPath="$PROJECT_DIR$/program.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/MyEnv.py" afterPath="$PROJECT_DIR$/lib/MyEnv.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testing.py" afterPath="$PROJECT_DIR$/testing.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -18,11 +20,11 @@
     <splitter split-orientation="horizontal" split-proportion="0.35676625">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-          <file leaf-file-name="testing.py" pinned="false" current-in-tab="false">
+          <file leaf-file-name="testing.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/testing.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="735">
-                  <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
+                <state relative-caret-position="840">
+                  <caret line="56" column="36" lean-forward="false" selection-start-line="56" selection-start-column="36" selection-end-line="56" selection-end-column="36" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -30,7 +32,7 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="program.py" pinned="false" current-in-tab="true">
+          <file leaf-file-name="program.py" pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/program.py">
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="147">
@@ -65,8 +67,8 @@
           <file leaf-file-name="MyEnv.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/lib/MyEnv.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="690">
-                  <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
+                <state relative-caret-position="645">
+                  <caret line="49" column="38" lean-forward="false" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
                   </folding>
@@ -120,9 +122,9 @@
         <option value="$PROJECT_DIR$/lib/PolicyEstimator.py" />
         <option value="$PROJECT_DIR$/lib/plotting.py" />
         <option value="$PROJECT_DIR$/experiments.py" />
+        <option value="$PROJECT_DIR$/program.py" />
         <option value="$PROJECT_DIR$/testing.py" />
         <option value="$PROJECT_DIR$/lib/MyEnv.py" />
-        <option value="$PROJECT_DIR$/program.py" />
       </list>
     </option>
   </component>
@@ -567,26 +569,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/testing.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="49" column="0" lean-forward="true" selection-start-line="49" selection-start-column="0" selection-end-line="49" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/MyEnv.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="690">
-          <caret line="52" column="0" lean-forward="false" selection-start-line="52" selection-start-column="0" selection-end-line="52" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/program.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="147">
@@ -597,6 +579,26 @@
             <element signature="e#1800#1853#1" expanded="false" />
             <element signature="e#4241#4533#0" expanded="false" />
             <element signature="e#4569#6262#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/testing.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="840">
+          <caret line="56" column="36" lean-forward="false" selection-start-line="56" selection-start-column="36" selection-end-line="56" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/MyEnv.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="49" column="38" lean-forward="false" selection-start-line="49" selection-start-column="38" selection-end-line="49" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
           </folding>
         </state>
       </provider>

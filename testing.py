@@ -54,7 +54,7 @@ def load_stats(file_name='test.npy'):
 
 
 for b in budgets:
-    run_episodes({'budget': b, 'a':1})
+    run_episodes({'budget': b, 'a': 1})
 
 # filename = 'a-1_budget-080'
 #
