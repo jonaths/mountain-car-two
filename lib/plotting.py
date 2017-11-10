@@ -5,7 +5,8 @@ from collections import namedtuple
 from matplotlib import pyplot as plt
 import sys
 
-EpisodeStats = namedtuple("Stats", ["episode_lengths", "episode_rewards", "episode_spent"])
+EpisodeStats = namedtuple(
+    "Stats", ["episode_lengths", "episode_rewards", "episode_spent", "episode_budget_count"])
 dir = 'results'
 
 
@@ -134,4 +135,40 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=10, noshow=False):
         fig4.savefig(dir + '/cumm-budget-' + label + '.png')
         plt.close(fig4)
 
-    return fig1, fig2, fig3, fig4
+
+
+
+
+
+
+    # Plot cumm budget spent
+    fig5 = plt.figure(figsize=(10, 5))
+
+    print "No budget"
+    print stats.episode_budget_count
+    print stats.episode_budget_count.mean(axis=0)
+
+    plt.plot(np.cumsum(stats.episode_budget_count.mean(axis=0)))
+    plt.xlabel("Episode")
+    plt.ylabel("No Budget")
+    plt.title("No budget percentage")
+    if noshow:
+        plt.close(fig5)
+    else:
+        fig5.savefig(dir + '/no-budget-' + label + '.png')
+        plt.close(fig5)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    return fig1, fig2, fig3, fig4, fig5

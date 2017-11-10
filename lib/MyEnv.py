@@ -45,18 +45,23 @@ class MyEnv:
         # a next_state le agrega el presupuesto
         next_state = np.append(next_state, np.array([self.budget]))
 
+
+
         if +0.80 <= action[0] < +0.90:
             position = next_state[0]
-            if 0.25 <= position < 0.35:
-                reward = 50 - math.pow(action[0], 2) * 0.1
+            if 0.15 <= position < 0.25:
+                reward = 20 - math.pow(action[0], 2) * 0.1
                 done = True
             else:
                 pass
         else:
             pass
 
-        # procesa done
-        done = done or self.budget <= 0
+        budget_end_count = 0
+        if self.budget <= 0:
+            budget_end_count = 1
+            done = True
+
 
         # logea informacion
         local_logger.info(
@@ -67,6 +72,8 @@ class MyEnv:
             "{:.14f}".format(self.budget) + ' ' +
             ("1" if done else "0")
         )
+
+        c['episode_budget_count'] = budget_end_count
 
         # regresa la tupla
         return next_state, reward, done, c
