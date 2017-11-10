@@ -60,8 +60,8 @@ class MyEnv:
         budget_end_count = 0
         if self.budget <= 0:
             budget_end_count = 1
+            reward = -20 - math.pow(action[0], 2) * 0.1
             done = True
-
 
         # logea informacion
         local_logger.info(
