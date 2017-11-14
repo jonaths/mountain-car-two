@@ -168,6 +168,7 @@ def run(budget, episodes):
         stats = plotting.EpisodeStats(
             episode_lengths=np.zeros(num_episodes),
             episode_rewards=np.zeros(num_episodes),
+            episode_shaped_rewards=np.zeros(num_episodes),
             episode_spent=np.zeros(num_episodes),
             # 3 posibles razones por las que puede terminar
             episode_budget_count=np.zeros(num_episodes))
@@ -188,7 +189,7 @@ def run(budget, episodes):
 
                 # Take a step
                 action = estimator_policy.predict(state)
-                next_state, reward, done, c = env.step(action, i_episode, t)
+                next_state, reward, shaped_reward, done, c = env.step(action, i_episode, t)
 
                 # Keep track of the transition
                 episode.append(Transition(
@@ -196,12 +197,14 @@ def run(budget, episodes):
 
                 # Update statistics
                 stats.episode_rewards[i_episode] += reward
+                stats.episode_shaped_rewards[i_episode] += shaped_reward
                 stats.episode_lengths[i_episode] = t
                 stats.episode_budget_count[i_episode] += c['episode_budget_count']
 
                 # Calculate TD Target
                 value_next = estimator_value.predict(next_state)
-                td_target = reward + discount_factor * value_next
+                # td_target = reward + discount_factor * value_next
+                td_target = shaped_reward + discount_factor * value_next
                 td_error = td_target - estimator_value.predict(state)
 
                 # Update the value estimator

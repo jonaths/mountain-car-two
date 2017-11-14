@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 import sys
 
 EpisodeStats = namedtuple(
-    "Stats", ["episode_lengths", "episode_rewards", "episode_spent", "episode_budget_count"])
+    "Stats", ["episode_lengths", "episode_rewards", "episode_spent", "episode_budget_count", "episode_shaped_rewards"])
 dir = 'results'
 
 
@@ -98,6 +98,25 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=10, noshow=False):
         fig2.savefig(dir + '/reward-vs-time-' + label + '.png')
         plt.close(fig2)
 
+    # Plot the episode reward over time
+    fig6 = plt.figure(figsize=(10, 5))
+
+    print "Shaped Episode Reward over Time (Smoothed over window size {})".format(smoothing_window)
+    print stats.episode_shaped_rewards
+    print stats.episode_shaped_rewards.mean(axis=0)
+
+    shaped_rewards_smoothed = pd.Series(stats.episode_shaped_rewards.mean(axis=0)).rolling(smoothing_window,
+                                                                             min_periods=smoothing_window).mean()
+    plt.plot(shaped_rewards_smoothed)
+    plt.xlabel("Episode")
+    plt.ylabel("Episode Shaped Reward (Smoothed)")
+    plt.title("Episode Shaped Reward over Time (Smoothed over window size {})".format(smoothing_window))
+    if noshow:
+        plt.close(fig6)
+    else:
+        fig6.savefig(dir + '/shaped_reward-vs-time-' + label + '.png')
+        plt.close(fig6)
+
     # Plot time steps and episode number
 
     print "Episode per time step"
@@ -171,4 +190,4 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=10, noshow=False):
 
 
 
-    return fig1, fig2, fig3, fig4, fig5
+    return fig1, fig2, fig3, fig4, fig5, fig6

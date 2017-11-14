@@ -45,8 +45,6 @@ class MyEnv:
         # a next_state le agrega el presupuesto
         next_state = np.append(next_state, np.array([self.budget]))
 
-
-
         if +0.80 <= action[0] < +0.90:
             position = next_state[0]
             if 0.15 <= position < 0.25:
@@ -63,20 +61,46 @@ class MyEnv:
             reward = -20 - math.pow(action[0], 2) * 0.1
             done = True
 
+
+
+        c['episode_budget_count'] = budget_end_count
+
+        # def den(x):
+        #     offset = 20
+        #     neg = 1 * (1 / (1 + math.exp(+self.budget - offset))) + 0.5
+        #     pos = 1 * (1 / (1 + math.exp(-self.budget + offset))) + 0.5
+        #     res = pos if x >= 0 else neg
+        #     return res
+
+        def shape_reward(x, b):
+            # si b < a esta cantidad entonces se activa la
+            # funcion
+            offset = 20
+            # para valores negativos de x
+            neg = +1.5 * x
+            # para valores positivos de x
+            pos = +0.5 * x
+            if b <= offset:
+                res = pos if x >= 0 else neg
+            else:
+                res = x
+            return res
+
+        shaped_reward = shape_reward(reward, self.budget)
+
         # logea informacion
         local_logger.info(
             ' ' +
             str(i_episode).zfill(4) + ' ' +
             str(t).zfill(4) + ' ' +
             "{:.14f}".format(reward) + ' ' +
+            "{:.14f}".format(shaped_reward) + ' ' +
             "{:.14f}".format(self.budget) + ' ' +
             ("1" if done else "0")
         )
 
-        c['episode_budget_count'] = budget_end_count
-
         # regresa la tupla
-        return next_state, reward, done, c
+        return next_state, reward, shaped_reward, done, c
 
     def update_budget(self, reward):
         self.budget = self.budget + reward
