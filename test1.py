@@ -1,15 +1,6 @@
-def shape_reward(x, b):
-    offset = 20
-    neg = +1.5 * x
-    pos = +0.5 * x
-    if b <= offset:
-        res = pos if x >= 0 else neg
-    else:
-        res = x
-    return res
-
-
-reward = -10
-b = 10
-shaped_reward = shape_reward(reward, b)
-print shaped_reward
+import gym
+env = gym.make('MsPacman-v0')
+env.reset()
+for _ in range(1000):
+    env.render()
+    env.step(env.action_space.sample()) # take a random action
