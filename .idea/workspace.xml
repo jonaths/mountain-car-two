@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="5864eba6-6f9f-4bf9-bea9-b6a02b127a75" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/MyEnv.py" afterPath="$PROJECT_DIR$/lib/MyEnv.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/testing.py" afterPath="$PROJECT_DIR$/testing.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -22,8 +24,8 @@
           <file leaf-file-name="testing.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/testing.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="15">
-                  <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+                <state relative-caret-position="986">
+                  <caret line="73" column="21" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="73" selection-end-column="21" />
                   <folding>
                     <element signature="e#0#23#0" expanded="true" />
                   </folding>
@@ -67,8 +69,8 @@
           <file leaf-file-name="MyEnv.py" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/lib/MyEnv.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="611">
-                  <caret line="85" column="2" lean-forward="true" selection-start-line="85" selection-start-column="2" selection-end-line="85" selection-end-column="2" />
+                <state relative-caret-position="176">
+                  <caret line="50" column="26" lean-forward="false" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
                   <folding>
                     <element signature="e#0#10#0" expanded="true" />
                   </folding>
@@ -111,9 +113,9 @@
         <option value="$PROJECT_DIR$/lib/PolicyEstimator.py" />
         <option value="$PROJECT_DIR$/experiments.py" />
         <option value="$PROJECT_DIR$/lib/plotting.py" />
-        <option value="$PROJECT_DIR$/lib/MyEnv.py" />
         <option value="$PROJECT_DIR$/program.py" />
         <option value="$PROJECT_DIR$/test1.py" />
+        <option value="$PROJECT_DIR$/lib/MyEnv.py" />
         <option value="$PROJECT_DIR$/testing.py" />
       </list>
     </option>
@@ -580,8 +582,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/MyEnv.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="611">
-          <caret line="85" column="2" lean-forward="true" selection-start-line="85" selection-start-column="2" selection-end-line="85" selection-end-column="2" />
+        <state relative-caret-position="176">
+          <caret line="50" column="26" lean-forward="false" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
           <folding>
             <element signature="e#0#10#0" expanded="true" />
           </folding>
@@ -590,8 +592,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/testing.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="8" column="9" lean-forward="false" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="9" />
+        <state relative-caret-position="986">
+          <caret line="73" column="21" lean-forward="false" selection-start-line="69" selection-start-column="18" selection-end-line="73" selection-end-column="21" />
           <folding>
             <element signature="e#0#23#0" expanded="true" />
           </folding>
