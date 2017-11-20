@@ -75,7 +75,7 @@ class MyEnv:
         def shape_reward(x, b):
             # si b < a esta cantidad entonces se activa la
             # funcion
-            offset = 20
+            offset = 40
             # para valores negativos de x
             neg = +1.5 * x
             # para valores positivos de x
