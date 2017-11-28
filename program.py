@@ -164,6 +164,8 @@ def run(budget, episodes):
             An EpisodeStats object with two numpy arrays for episode_lengths and episode_rewards.
         """
 
+        saver = tf.train.Saver()
+
         # Keeps track of useful statistics
         stats = plotting.EpisodeStats(
             episode_lengths=np.zeros(num_episodes),
@@ -226,6 +228,9 @@ def run(budget, episodes):
             # agrega el total gastado para el episodio
             stats.episode_spent[i_episode] = env.calculate_spent()
 
+            if i_episode % 50 == 0:
+                save_path = saver.save(sess, "model/"+str(budget)+"-"+str(i_episode)+".ckpt")
+
         return stats
 
     tf.reset_default_graph()
@@ -236,6 +241,7 @@ def run(budget, episodes):
 
     with tf.Session() as sess:
         sess.run(tf.initialize_all_variables())
+
         # Note, due to randomness in the policy the number of episodes you need varies
         # TODO: Sometimes the algorithm gets stuck, I'm not sure what exactly is happening there.
         stats = actor_critic(env, policy_estimator, value_estimator, episodes, discount_factor=0.95)
