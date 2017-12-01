@@ -77,7 +77,7 @@ class MyEnv:
             self.set_done_reason(3)
 
         # guarda el presupuesto en key del arreglo c
-        c['episode_budget_count'] = budget_end_count
+        c['episode_budget_count'] = self.done_reason
 
         def shape_reward(x, b):
             # si b < a esta cantidad entonces se activa la

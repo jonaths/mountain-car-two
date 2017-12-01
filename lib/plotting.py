@@ -62,8 +62,9 @@ def plot_value_function(V, title="Value Function"):
     plot_surface(X, Y, Z_ace, "{} (Usable Ace)".format(title))
 
 
-def plot_episode_stats(stats, label = 'fig', smoothing_window=10, noshow=False):
-    # Plot the episode length over time
+def plot_episode_stats(stats, label = 'fig', smoothing_window=50, noshow=False):
+
+    ####################################################################################
 
     print "Episode Length over Time"
     print stats.episode_lengths
@@ -83,6 +84,8 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=10, noshow=False):
     # Plot the episode reward over time
     fig2 = plt.figure(figsize=(10, 5))
 
+    ####################################################################################
+
     print "Episode Reward over Time (Smoothed over window size {})".format(smoothing_window)
     print stats.episode_rewards
     print stats.episode_rewards.mean(axis=0)
@@ -97,6 +100,8 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=10, noshow=False):
     else:
         fig2.savefig(dir + '/reward-vs-time-' + label + '.png')
         plt.close(fig2)
+
+    ####################################################################################
 
     # Plot the episode reward over time
     fig6 = plt.figure(figsize=(10, 5))
@@ -117,6 +122,8 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=10, noshow=False):
         fig6.savefig(dir + '/shaped_reward-vs-time-' + label + '.png')
         plt.close(fig6)
 
+    ####################################################################################
+
     # Plot time steps and episode number
 
     print "Episode per time step"
@@ -135,7 +142,7 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=10, noshow=False):
         fig3.savefig(dir + '/episode-vs-time-' + label + '.png')
         plt.close(fig3)
 
-
+    ####################################################################################
 
     # Plot cumm budget spent
     fig4 = plt.figure(figsize=(10, 5))
@@ -154,40 +161,37 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=10, noshow=False):
         fig4.savefig(dir + '/cumm-budget-' + label + '.png')
         plt.close(fig4)
 
-
-
-
-
-
+    ####################################################################################
 
     # Plot cumm budget spent
     fig5 = plt.figure(figsize=(10, 5))
 
-    print "No budget"
-    print stats.episode_budget_count
-    print stats.episode_budget_count.mean(axis=0)
+    all_reasons_end = np.ravel(stats.episode_budget_count)
+    # truco para considerar todos los keys posibles
+    unique, counts = np.unique(np.append(all_reasons_end, [0, 1, 2, 3]), return_counts=True)
 
-    plt.plot(np.cumsum(stats.episode_budget_count.mean(axis=0)))
-    plt.xlabel("Episode")
-    plt.ylabel("No Budget")
-    plt.title("No budget percentage")
+    print "Cummulative budget spent"
+    print stats.episode_spent
+    # para completar el truco le resto a la cuenta 1
+    print unique, counts - 1
+
+    # Data to plot
+    labels = unique
+    sizes = counts - 1
+    colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+    explode = (0.1, 0, 0, 0)  # explode 1st slice
+
+    # Plot
+    plt.pie(sizes, explode=explode, labels=labels, colors=colors,
+            autopct='%1.1f%%', shadow=True, startangle=140)
+
+    plt.title("End reasons")
     if noshow:
         plt.close(fig5)
     else:
         fig5.savefig(dir + '/no-budget-' + label + '.png')
         plt.close(fig5)
 
-
-
-
-
-
-
-
-
-
-
-
-
+    ####################################################################################
 
     return fig1, fig2, fig3, fig4, fig5, fig6
