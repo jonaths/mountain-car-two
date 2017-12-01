@@ -4,9 +4,9 @@ import numpy as np
 import sys
 import pandas as pd
 
-num_episodes = 2500
+num_episodes = 1500
 budgets = [100, 60, 40, 20]
-reps = 5
+reps = 10
 
 results = []
 
@@ -66,11 +66,11 @@ def load_stats(file_name='test.npy'):
     return stats_array
 
 
-# for b in budgets:
-#     run_episodes({'budget': b, 'a': 1})
+for b in budgets:
+    run_episodes({'budget': b, 'a': 1})
 
-filename = 'a-1_budget-100'
-
-stats_array_loaded = load_stats(filename)
-
-plotting.plot_episode_stats(stats_array_loaded, label=filename, smoothing_window=10)
+# filename = 'a-1_budget-100'
+#
+# stats_array_loaded = load_stats(filename)
+#
+# plotting.plot_episode_stats(stats_array_loaded, label=filename, smoothing_window=10)
