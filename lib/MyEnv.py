@@ -58,7 +58,7 @@ class MyEnv:
         next_state = np.append(next_state, np.array([self.budget]))
 
         # permite terminar antes si se cumplen condiciones de posicion y accion
-        if +0.70 <= action[0] < +0.90:
+        if +0.60 <= action[0] < +0.90:
             position = next_state[0]
             if -0.10 <= position < 0.25:
                 reward = 40 - math.pow(action[0], 2) * 0.1
@@ -84,9 +84,11 @@ class MyEnv:
             # funcion
             offset = 40
             # para valores negativos de x
-            neg = +1.5 * x
+            # neg = +1.5 * x
+            neg = +10.0 * x
             # para valores positivos de x
-            pos = +0.5 * x
+            # pos = +0.5 * x
+            pos = +1.0 * x
             if b <= offset:
                 res = pos if x >= 0 else neg
             else:
