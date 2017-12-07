@@ -163,29 +163,70 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=50, noshow=False):
 
     ####################################################################################
 
-    # Plot cumm budget spent
-    fig5 = plt.figure(figsize=(10, 5))
+    print stats.episode_budget_count.shape
+    slices = 4
+    slice_size = round(stats.episode_budget_count.shape[1] / slices)
+    print slice_size
+    fig5, axs = plt.subplots(nrows=2, ncols=2)
+    for s in range(slices):
+        if s == slices - 1:
+            data = stats.episode_budget_count[:, int(s * slice_size):int(stats.episode_budget_count.shape[1])]
+        data = stats.episode_budget_count[:, int(s * slice_size):int((s+1) * slice_size)]
 
-    all_reasons_end = np.ravel(stats.episode_budget_count)
-    # truco para considerar todos los keys posibles
-    unique, counts = np.unique(np.append(all_reasons_end, [0, 1, 2, 3]), return_counts=True)
+        print s, data.shape
 
-    print "Cummulative budget spent"
-    print stats.episode_spent
-    # para completar el truco le resto a la cuenta 1
-    print unique, counts - 1
+        all_reasons_end = np.ravel(data)
+        # truco para considerar todos los keys posibles
+        unique, counts = np.unique(np.append(all_reasons_end, [0, 1, 2, 3]), return_counts=True)
 
-    # Data to plot
-    labels = unique
-    sizes = counts - 1
-    colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
-    explode = (0.1, 0, 0, 0)  # explode 1st slice
+        # Data to plot
+        sizes = counts - 1
+        colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+        explode = (0, 0, 0.2, 0)  # explode 1st slice
 
-    # Plot
-    plt.pie(sizes, explode=explode, labels=labels, colors=colors,
-            autopct='%1.1f%%', shadow=True, startangle=140)
+        dict = {'0.0': 'init', '1.0': 'env', '2.0': 'exit', '3.0': 'budget'}
+        print dict.keys()
+        renamed_labels = []
+        tmp = 0
+        for u, c in zip(unique, counts):
+            print u, c, counts[tmp]
+            curr_label = dict[str(u)] if counts[tmp] > 0 else ''
+            renamed_labels.append(str(u) + ' ' + str(curr_label))
+            tmp += 1
 
-    plt.title("End reasons")
+        print renamed_labels
+
+        # Plot
+        bin_str = '{0:04b}'.format(s)
+        axs[int(bin_str[-2]), int(bin_str[-1])].set_title(str(s+1)+'/'+str(slices))
+        axs[int(bin_str[-2]), int(bin_str[-1])]
+        axs[int(bin_str[-2]), int(bin_str[-1])].pie(sizes, explode=explode, labels=renamed_labels, colors=colors,
+                autopct='%1.1f%%', shadow=True, startangle=140, labeldistance=1.3)
+
+    # sys.exit(0)
+    #
+    # all_reasons_end = np.ravel(stats.episode_budget_count)
+    # # truco para considerar todos los keys posibles
+    # unique, counts = np.unique(np.append(all_reasons_end, [0, 1, 2, 3]), return_counts=True)
+    #
+    # print "Cummulative budget spent"
+    # print stats.episode_spent
+    # # para completar el truco le resto a la cuenta 1
+    # print unique, counts - 1
+    #
+    # # Data to plot
+    # labels = unique
+    # sizes = counts - 1
+    # colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+    # explode = (0.1, 0, 0, 0)  # explode 1st slice
+    #
+    # # Plot
+    # plt.pie(sizes, explode=explode, labels=labels, colors=colors,
+    #         autopct='%1.1f%%', shadow=True, startangle=140)
+
+    plt.suptitle("End reasons")
+    plt.subplots_adjust(wspace=0.3, hspace=0.5)
+
     if noshow:
         plt.close(fig5)
     else:
