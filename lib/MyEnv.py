@@ -42,9 +42,6 @@ class MyEnv:
 
     def step(self, action, i_episode=0, t=1):
 
-        # variable que contiene la razon por la cual termina
-        budget_end_count = 0
-
         # accion de env open ai
         next_state, reward, done, c = self.env.step(action)
         if done:
@@ -70,12 +67,12 @@ class MyEnv:
         # else:
         #     pass
         #
-        # # verifica si se quedo sin prespuesto
-        # if self.budget <= 0:
-        #     budget_end_count = 1
-        #     reward = -20 - math.pow(action[0], 2) * 0.1
-        #     # terminacion por presupuesto
-        #     self.set_done_reason(3)
+
+        # verifica si se quedo sin prespuesto
+        if self.budget <= 0:
+            reward = -20 - math.pow(action[0], 2) * 0.1
+            # terminacion por presupuesto
+            self.set_done_reason(3)
 
         # guarda el presupuesto en key del arreglo c
         c['episode_budget_count'] = self.done_reason

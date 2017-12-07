@@ -179,6 +179,9 @@ def run(budget, episodes):
             "Transition", ["state", "action", "reward", "next_state", "done"])
 
         for i_episode in range(num_episodes):
+
+            print "Episodio:", i_episode
+
             # Reset the environment and pick the fisrst action
             state = env.reset()
 
@@ -217,8 +220,8 @@ def run(budget, episodes):
                 estimator_policy.update(state, td_error, action)
 
                 # Print out which step we're on, useful for debugging.
-                print("\rStep {} @ Episode {}/{} ({})".format(
-                    t, i_episode + 1, num_episodes, stats.episode_rewards[i_episode - 1]))
+                # print("\rStep {} @ Episode {}/{} ({})".format(
+                #     t, i_episode + 1, num_episodes, stats.episode_rewards[i_episode - 1]))
 
                 if done:
                     break
