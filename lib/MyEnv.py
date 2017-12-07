@@ -54,19 +54,18 @@ class MyEnv:
         # a next_state le agrega el presupuesto
         next_state = np.append(next_state, np.array([self.budget]))
 
-        # comentado para probar solo con presupuesto
-        # # permite terminar antes si se cumplen condiciones de posicion y accion
-        # if +0.60 <= action[0] < +0.90:
-        #     position = next_state[0]
-        #     if -0.10 <= position < 0.25:
-        #         reward = 40 - math.pow(action[0], 2) * 0.1
-        #         # terminacion por salida anticipada
-        #         self.set_done_reason(2)
-        #     else:
-        #         pass
-        # else:
-        #     pass
-        #
+        # permite terminar antes si se cumplen condiciones de posicion y accion
+        if +0.60 <= action[0] < +0.90:
+            position = next_state[0]
+            if -0.10 <= position < 0.25:
+                reward = 40 - math.pow(action[0], 2) * 0.1
+                # terminacion por salida anticipada
+                self.set_done_reason(2)
+            else:
+                pass
+        else:
+            pass
+
 
         # verifica si se quedo sin prespuesto
         if self.budget <= 0:
