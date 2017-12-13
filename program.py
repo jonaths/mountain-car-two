@@ -245,12 +245,24 @@ def run(budget, episodes):
 
                 x1x, y1y = np.meshgrid(x1, x2)
 
-                # columna 0: b, columna 1: x1, columna 2: x2
-                v = np.zeros((items ** 2, 4))
+                # enumera del 10 a budget incluyedolo
+                step = 10
+                bs = range(10, budget + step, step)
 
-                v[:, 0] = np.full((1, items ** 2), 100)
-                v[:, 1] = x1x.ravel()
-                v[:, 2] = y1y.ravel()
+                # el numero de filas que contiene el arreglo (una para cada combinacion b x1 x2)
+                length = items ** 2 * len(bs)
+
+                # el numero de columnas del arreglo (una para cada parametro y la ultima para y)
+                columns = 4
+
+                v = np.zeros((length, columns))
+
+                index = 0
+                for b in bs:
+                    v[index * items ** 2: (index + 1) * items ** 2, 0] = np.full((1, items ** 2), b)
+                    v[index * items ** 2: (index + 1) * items ** 2, 1] = x1x.ravel()
+                    v[index * items ** 2: (index + 1) * items ** 2, 2] = y1y.ravel()
+                    index += 1
 
                 # para cada fila de v
                 for r in v:
@@ -265,14 +277,14 @@ def run(budget, episodes):
                 filename = 'values/b-' + b_name + '_ep-' + ep_name + '.npy'
 
                 try:
-                    # si existe el archivo cargalo
                     arr = np.load(filename)
+                    print "arr found", arr.shape
                     pass
                 except IOError:
-                    # si no existe crealo e inicializalo
-                    arr = np.zeros((1, items ** 2, 4))
+                    arr = np.zeros((1, length, 4))
                     arr[0] = v
                     new = True
+                    print "arr created", arr.shape
                     pass
 
                 if new:

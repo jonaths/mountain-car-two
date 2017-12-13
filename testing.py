@@ -6,7 +6,7 @@ import pandas as pd
 
 num_episodes = 5
 budgets = [40, 20]
-reps = 5
+reps = 3
 
 results = []
 
