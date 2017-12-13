@@ -173,7 +173,8 @@ def run(budget, episodes):
             episode_shaped_rewards=np.zeros(num_episodes),
             episode_spent=np.zeros(num_episodes),
             # 3 posibles razones por las que puede terminar
-            episode_budget_count=np.zeros(num_episodes))
+            episode_budget_count=np.zeros(num_episodes),
+            episode_values=np.zeros(num_episodes))
 
         Transition = collections.namedtuple(
             "Transition", ["state", "action", "reward", "next_state", "done"])
@@ -233,6 +234,60 @@ def run(budget, episodes):
 
             if i_episode % 50 == 0:
                 save_path = saver.save(sess, "model/"+str(budget)+"-"+str(i_episode)+".ckpt")
+
+                # a partir de aqui guarda la funcion de valor para
+                # varios valores de los estados
+                items = 100
+
+                # genera las columnas
+                b = np.full((1, items), 100)
+                x1 = np.linspace(-0.06, 0.06, num=items)
+                x2 = np.linspace(-1.2, 0.6, num=items)
+
+                # crea la matriz de X y Y
+                v = np.zeros((items, 4))
+
+                # columna 0: b, columna 1: x1, columna 2: x2
+                v[:, 0] = b
+                v[:, 1] = x1
+                v[:, 2] = x2
+
+                # para cada fila de v
+                for r in v:
+                    # estima segun el modelo
+                    r[-1] = estimator_value.predict(r[0:3])
+
+                # bandera de no existe el archivo
+                new = False
+
+                ep_name = "{0:0>4}".format(i_episode)
+                b_name = "{0:0>4}".format(budget)
+                filename = 'values/b-' + b_name + '_ep-' + ep_name + '.npy'
+                np.save(filename, v)
+
+                try:
+                    # si existe el archivo cargalo
+                    arr = np.load(filename)
+                    pass
+                except IOError:
+                    # si no existe crealo e inicializalo
+                    arr = np.zeros((1, items, 4))
+                    arr[0] = v
+                    # bandera de nuevo true
+                    new = True
+                    pass
+
+                if new:
+                    # si es nuevo no hagas nada
+                    print "if"
+                    pass
+                else:
+                    # si no es nuevo agregale el ultimo elemento
+                    print "else"
+                    arr = np.append(arr, [v], axis=0)
+
+                # guarda el archivo
+                np.save(filename, arr)
 
         return stats
 
