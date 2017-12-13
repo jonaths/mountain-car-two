@@ -4,7 +4,7 @@ import numpy as np
 import sys
 import pandas as pd
 
-num_episodes = 500
+num_episodes = 5
 budgets = [40, 20]
 reps = 5
 
