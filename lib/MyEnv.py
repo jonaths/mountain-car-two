@@ -54,7 +54,7 @@ class MyEnv:
         # a next_state le agrega el presupuesto
         next_state = np.append(next_state, np.array([self.budget]))
 
-        permite terminar antes si se cumplen condiciones de posicion y accion
+        # permite terminar antes si se cumplen condiciones de posicion y accion
         if +0.60 <= action[0] < +0.90:
             position = next_state[0]
             if -0.10 <= position < 0.25:
