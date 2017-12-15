@@ -184,6 +184,7 @@ def run(budget, episodes):
             print "Episodio:", i_episode
 
             # Reset the environment and pick the fisrst action
+            # [car position [-1.2, 0.6], car velocity[-0.07, 0.07], budget]
             state = env.reset()
 
             episode = []
@@ -237,11 +238,11 @@ def run(budget, episodes):
 
                 # a partir de aqui guarda la funcion de valor para
                 # varios valores de los estados
-                items = 10
+                items = 20
 
                 # genera las columnas
-                x1 = np.linspace(-0.06, 0.06, num=items)
-                x2 = np.linspace(-1.2, 0.6, num=items)
+                x1 = np.linspace(-1.2, 0.6, num=items)
+                x2 = np.linspace(-0.07, 0.07, num=items)
 
                 x1x, y1y = np.meshgrid(x1, x2)
 
