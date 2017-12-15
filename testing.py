@@ -5,8 +5,8 @@ import sys
 import pandas as pd
 
 num_episodes = 1000
-budgets = [20]
-reps = 5
+budgets = [100, 60, 40, 20]
+reps = 10
 
 results = []
 
