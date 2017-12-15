@@ -93,8 +93,8 @@ class MyEnv:
 
         # aplica funcion de shaping
         # comentado para probar solo sin presupuesto
-        # shaped_reward = shape_reward(reward, self.budget)
-        shaped_reward = reward
+        shaped_reward = shape_reward(reward, self.budget)
+        # shaped_reward = reward
 
 
         # logea informacion
