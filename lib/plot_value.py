@@ -4,21 +4,28 @@ from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import numpy as np
 
-def plot_value(b, ep):
 
-    filename = 'values/' + 'b-0100_ep-0950' + '.npy'
-    arr = np.load(filename)
+def plot_value(b, ep):
+    b_str = '{:04}'.format(b)
+    ep_str = '{:04}'.format(ep)
+
+    filename = 'b-' + b_str + '_ep-' + ep_str + '.npy'
+    print filename
+    arr = np.load('values/' + filename)
 
     print "loaded file shape"
     print arr.shape
-    # print arr
 
     print "average shape"
     arr = np.average(arr, axis=0)
     print arr.shape
-    print arr
 
-    budgets_to_print = [40]
+    # imprime la funcion de valor desde 20 hasta b (el +1 es para incluirlo)
+    # de 20 en 20
+    budgets_to_print = range(20, b + 1, 20)
+
+    print budgets_to_print
+
     unfold_index = 20
 
     for b in budgets_to_print:
@@ -29,18 +36,17 @@ def plot_value(b, ep):
         print "v shape"
         print v.shape
 
-        cp = plt.contour(
-            v[:, 1].reshape((unfold_index, unfold_index)),
-            v[:, 2].reshape((unfold_index, unfold_index)),
-            v[:, 3].reshape((unfold_index, unfold_index))
-        )
-        plt.clabel(cp, inline=True,
-                   fontsize=10)
-        plt.title('Contour Plot')
-        plt.show()
+        # cp = plt.contour(
+        #     v[:, 1].reshape((unfold_index, unfold_index)),
+        #     v[:, 2].reshape((unfold_index, unfold_index)),
+        #     v[:, 3].reshape((unfold_index, unfold_index))
+        # )
+        # plt.clabel(cp, inline=True,
+        #            fontsize=10)
+        # plt.title('Contour Plot')
+        # plt.show()
 
         fig = plt.figure()
-        ax = fig.gca(projection='3d')
 
         # Plot the surface.
         ax = fig.gca(projection='3d')
@@ -51,7 +57,7 @@ def plot_value(b, ep):
             v[:, 3].reshape((unfold_index, unfold_index)),
             cmap=cm.coolwarm,
             linewidth=0,
-            antialiased=False
+            antialiased=True
         )
 
         # Customize the z axis.
@@ -61,5 +67,9 @@ def plot_value(b, ep):
         # Add a color bar which maps values to colors.
         fig.colorbar(surf, shrink=0.5, aspect=5)
 
-        plt.show()
+        title = 'Ep-' + ep_str + ', B-' + b_str + '@ ' + str(b)
 
+        plt.title(title)
+
+        # plt.show()
+        plt.savefig('value_results/' + filename + '_b-' + str(b) + '.png')

@@ -1,5 +1,6 @@
 from program import run
 from lib import plotting
+from lib.plot_value import plot_value
 import numpy as np
 import sys
 import pandas as pd
@@ -18,6 +19,7 @@ def get_filename(settings):
         filename += key + '-' + str(value) + "_"
     filename = filename[:-1]
     return filename
+
 
 def load_stats(file_name='test.npy'):
     """
@@ -67,12 +69,7 @@ def run_episodes(settings):
          stats_array.episode_spent,
          stats_array.episode_budget_count,
          stats_array.episode_shaped_rewards])
-    np.save(filename+'.npy', to_save)
-
-
-
-
-
+    np.save(filename + '.npy', to_save)
 
 
 for b in budgets:
@@ -92,3 +89,8 @@ def plot(settings):
 for b in budgets:
     plot({'budget': b, 'a': 1})
 
+
+# episodes = [100, 500, 950]
+# for b in budgets:
+#     for ep in episodes:
+#         plot_value(b, ep)

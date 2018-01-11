@@ -54,23 +54,25 @@ class MyEnv:
         # a next_state le agrega el presupuesto
         next_state = np.append(next_state, np.array([self.budget]))
 
+        # SALIDA ANTICIPADA ###################################################
         # permite terminar antes si se cumplen condiciones de posicion y accion
-        if +0.60 <= action[0] < +0.90:
-            position = next_state[0]
-            if -0.10 <= position < 0.25:
-                reward = 40 - math.pow(action[0], 2) * 0.1
-                # terminacion por salida anticipada
-                self.set_done_reason(2)
-            else:
-                pass
-        else:
-            pass
+        # if +0.60 <= action[0] < +0.90:
+        #     position = next_state[0]
+        #     if -0.10 <= position < 0.25:
+        #         reward = 40 - math.pow(action[0], 2) * 0.1
+        #         # terminacion por salida anticipada
+        #         self.set_done_reason(2)
+        #     else:
+        #         pass
+        # else:
+        #     pass
 
+        # TERMINA SI SE QUEDA SIN PRESUPUESTO #################################
         # verifica si se quedo sin prespuesto
-        if self.budget <= 0:
-            reward = -20 - math.pow(action[0], 2) * 0.1
-            # terminacion por presupuesto
-            self.set_done_reason(3)
+        # if self.budget <= 0:
+        #     reward = -20 - math.pow(action[0], 2) * 0.1
+        #     # terminacion por presupuesto
+        #     self.set_done_reason(3)
 
         # guarda el presupuesto en key del arreglo c
         c['episode_budget_count'] = self.done_reason
@@ -91,11 +93,11 @@ class MyEnv:
                 res = x
             return res
 
-        # aplica funcion de shaping
-        # comentado para probar solo sin presupuesto
-        shaped_reward = shape_reward(reward, self.budget)
-        # shaped_reward = reward
-
+        # APLICAR SHAPING #####################################################
+        # SI
+        # shaped_reward = shape_reward(reward, self.budget)
+        # NO
+        shaped_reward = reward
 
         # logea informacion
         local_logger.info(
