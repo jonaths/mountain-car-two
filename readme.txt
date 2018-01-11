@@ -1,4 +1,5 @@
     B en repr   | Terminacion por B | Salida anticipada | Shaping
-0   Si          | No                | No                | No
+0   Si          | No                | Si                | No
 
-Experimento base: una salida nada mas y el actor critic. 
+Aqui quiero probar que aprende el programa si le doy la oportunidad de salir antes sin nada mas que el presupuesto
+en la representacion.
