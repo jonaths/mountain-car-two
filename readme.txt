@@ -1,5 +1,8 @@
     B en repr   | Terminacion por B | Salida anticipada | Shaping
-0   Si          | No                | Si                | No
+X   Si          | No                | No                | No
+    Si          | No                | Si                | No
+    Si          | Si                | No                | No
+    Si          | Si                | Si                | No
 
-Aqui quiero probar que aprende el programa si le doy la oportunidad de salir antes sin nada mas que el presupuesto
-en la representacion.
+
+Experimento base. No hay nada, solo la salida normal y el presupuesto como parte de la representacion.
