@@ -44,12 +44,13 @@ class MyEnv:
 
         # accion de env open ai
         next_state, reward, done, c = self.env.step(action)
-        if done:
-            # terminacion por ambiente
-            self.set_done_reason(1)
 
         # EVITA QUE SALGA POR LA SALIDA PRINCIPAL ##############################
         done = False
+
+        if done:
+            # terminacion por ambiente
+            self.set_done_reason(1)
 
         # Actualiza el presupuesto con la recompensa actual
         self.update_budget(reward)

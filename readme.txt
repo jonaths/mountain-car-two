@@ -6,4 +6,4 @@
 X   Si          | No                | No            | Si                | No
 
 Solo termina si encuentra la salida secundaria. No termina por numero maximo de pasos ni por ninguna
-otra razón. 
+otra razón.
