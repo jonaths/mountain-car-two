@@ -1,8 +1,9 @@
-    B en repr   | Terminacion por B | Salida anticipada | Shaping
-    Si          | No                | No                | No
-    Si          | No                | Si                | No
-    Si          | Si                | No                | No
-X   Si          | Si                | Si                | No
+    B en repr   | Terminacion por B | Salida Normal | Salida anticipada | Shaping
+    Si          | No                | Si            | No                | No
+    Si          | No                | Si            | Si                | No
+    Si          | Si                | Si            | No                | No
+    Si          | Si                | Si            | Si                | No
+X   Si          | No                | No            | Si                | No
 
-Termina por presupuesto y hay salida anticipada. Espero que el agente con mucho presupuesto salga
-por la salida principal y con poco presupuesto aprenda a encontrar la salida alternativa. 
+Solo termina si encuentra la salida secundaria. No termina por numero maximo de pasos ni por ninguna
+otra razón. 

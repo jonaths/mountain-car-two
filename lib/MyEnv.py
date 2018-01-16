@@ -48,6 +48,9 @@ class MyEnv:
             # terminacion por ambiente
             self.set_done_reason(1)
 
+        # EVITA QUE SALGA POR LA SALIDA PRINCIPAL ##############################
+        done = False
+
         # Actualiza el presupuesto con la recompensa actual
         self.update_budget(reward)
 
