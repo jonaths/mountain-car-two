@@ -6,4 +6,4 @@
 X   Si          | No                | No            | Si                | No
 
 Solo recibe recompensa si sale por la salida anticipada. Si llega a la salida principal recibe 0
-de recompensa. 
+de recompensa.
