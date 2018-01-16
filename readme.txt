@@ -5,5 +5,5 @@
     Si          | Si                | Si            | Si                | No
 X   Si          | No                | No            | Si                | No
 
-Solo termina si encuentra la salida secundaria. No termina por numero maximo de pasos ni por ninguna
-otra razón.
+Solo recibe recompensa si sale por la salida anticipada. Si llega a la salida principal recibe 0
+de recompensa. 
