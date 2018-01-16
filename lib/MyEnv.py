@@ -44,12 +44,15 @@ class MyEnv:
 
         # accion de env open ai
         next_state, reward, done, c = self.env.step(action)
-
-        # EVITA QUE SALGA POR LA SALIDA PRINCIPAL ##############################
-        done = False
-
+        # RECOMPENSA LA SALIDA NORMAL ########################################
+        # SI (DEFAULT)
+        # if done:
+        #     # terminacion por ambiente
+        #     self.set_done_reason(1)
+        # NO
         if done:
             # terminacion por ambiente
+            reward = 0
             self.set_done_reason(1)
 
         # Actualiza el presupuesto con la recompensa actual
@@ -65,6 +68,7 @@ class MyEnv:
             if -0.10 <= position < 0.25:
                 reward = 40 - math.pow(action[0], 2) * 0.1
                 # terminacion por salida anticipada
+                print reward
                 self.set_done_reason(2)
             else:
                 pass
@@ -73,10 +77,10 @@ class MyEnv:
 
         # TERMINA SI SE QUEDA SIN PRESUPUESTO #################################
         # verifica si se quedo sin prespuesto
-        if self.budget <= 0:
-            reward = -20 - math.pow(action[0], 2) * 0.1
-            # terminacion por presupuesto
-            self.set_done_reason(3)
+        # if self.budget <= 0:
+        #     reward = -20 - math.pow(action[0], 2) * 0.1
+        #     # terminacion por presupuesto
+        #     self.set_done_reason(3)
 
         # guarda el presupuesto en key del arreglo c
         c['episode_budget_count'] = self.done_reason
