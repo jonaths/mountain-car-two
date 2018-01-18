@@ -47,14 +47,14 @@ class MyEnv:
 
         # RECOMPENSA LA SALIDA NORMAL ########################################
         # SI (DEFAULT)
-        # if done:
-            # terminacion por ambiente
-            # self.set_done_reason(1)
-        # NO
         if done:
             # terminacion por ambiente
-            reward = 0
             self.set_done_reason(1)
+        # NO
+        # if done:
+        #     # terminacion por ambiente
+        #     reward = 0
+        #     self.set_done_reason(1)
 
         # Actualiza el presupuesto con la recompensa actual
         self.update_budget(reward)

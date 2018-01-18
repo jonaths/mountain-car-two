@@ -1,8 +1,8 @@
     B en repr   | Terminacion por B | Salida Normal | Salida anticipada | Shaping
     Si          | No                | Si            | No                | No
-    Si          | No                | Si            | Si                | No
+ X  Si          | No                | Si            | Si                | No
     Si          | Si                | Si            | No                | No
     Si          | Si                | Si            | Si                | No
-X   Si          | No                | No            | Si                | No
+    Si          | No                | No            | Si                | No
 
-Exp1. Solo existe la salida anticipada. 
+Exp2. Solo existe la salida anticipada. 
