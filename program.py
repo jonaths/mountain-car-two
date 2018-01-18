@@ -123,8 +123,26 @@ def run(budget, episodes):
                 self.target = tf.placeholder(dtype=tf.float32, name="target")
 
                 # This is just linear classifier
-                self.output_layer = tf.contrib.layers.fully_connected(
+                # self.output_layer = tf.contrib.layers.fully_connected(
+                #     inputs=tf.expand_dims(self.state, 0),
+                #     num_outputs=1,
+                #     activation_fn=None,
+                #     weights_initializer=tf.zeros_initializer)
+
+                input_layer = tf.contrib.layers.fully_connected(
                     inputs=tf.expand_dims(self.state, 0),
+                    num_outputs=4,
+                    activation_fn=None,
+                    weights_initializer=tf.zeros_initializer)
+
+                hidden_layer = tf.contrib.layers.fully_connected(
+                    inputs=input_layer,
+                    num_outputs=3,
+                    activation_fn=None,
+                    weights_initializer=tf.zeros_initializer)
+
+                self.output_layer = tf.contrib.layers.fully_connected(
+                    inputs=hidden_layer,
                     num_outputs=1,
                     activation_fn=None,
                     weights_initializer=tf.zeros_initializer)
@@ -238,7 +256,7 @@ def run(budget, episodes):
 
                 # a partir de aqui guarda la funcion de valor para
                 # varios valores de los estados
-                items = 20
+                items = 40
 
                 # genera las columnas
                 x1 = np.linspace(-1.2, 0.6, num=items)
