@@ -286,6 +286,7 @@ def run(budget, episodes):
                 #     t, i_episode + 1, num_episodes, stats.episode_rewards[i_episode - 1]))
 
                 if done:
+                    print "  ", next_state, reward
                     break
 
                 state = next_state
