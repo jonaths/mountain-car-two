@@ -69,7 +69,6 @@ class MyEnv:
             if -0.10 <= position < 0.25:
                 reward = 40 - math.pow(action[0], 2) * 0.1
                 # terminacion por salida anticipada
-                print reward
                 self.set_done_reason(2)
             else:
                 pass
@@ -78,10 +77,10 @@ class MyEnv:
 
         # TERMINA SI SE QUEDA SIN PRESUPUESTO #################################
         # verifica si se quedo sin prespuesto
-        # if self.budget <= 0:
-        #     reward = -20 - math.pow(action[0], 2) * 0.1
-        #     # terminacion por presupuesto
-        #     self.set_done_reason(3)
+        if self.budget <= 0:
+            reward = -20 - math.pow(action[0], 2) * 0.1
+            # terminacion por presupuesto
+            self.set_done_reason(3)
 
         # guarda el presupuesto en key del arreglo c
         c['episode_budget_count'] = self.done_reason
