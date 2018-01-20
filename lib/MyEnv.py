@@ -47,14 +47,14 @@ class MyEnv:
 
         # RECOMPENSA LA SALIDA NORMAL ########################################
         # SI (DEFAULT)
-        if done:
-            # terminacion por ambiente
-            self.set_done_reason(1)
-        # NO
         # if done:
         #     # terminacion por ambiente
-        #     reward = 0
         #     self.set_done_reason(1)
+        # NO
+        if done:
+            # terminacion por ambiente
+            reward = 0
+            self.set_done_reason(1)
 
         # Actualiza el presupuesto con la recompensa actual
         self.update_budget(reward)
@@ -64,17 +64,17 @@ class MyEnv:
 
         # SALIDA ANTICIPADA ###################################################
         # permite terminar antes si se cumplen condiciones de posicion y accion
-        # if +0.60 <= action[0] < +0.90:
-        #     position = next_state[0]
-        #     if -0.10 <= position < 0.25:
-        #         reward = 40 - math.pow(action[0], 2) * 0.1
-        #         # terminacion por salida anticipada
-        #         print reward
-        #         self.set_done_reason(2)
-        #     else:
-        #         pass
-        # else:
-        #     pass
+        if +0.60 <= action[0] < +0.90:
+            position = next_state[0]
+            if -0.10 <= position < 0.25:
+                reward = 40 - math.pow(action[0], 2) * 0.1
+                # terminacion por salida anticipada
+                print reward
+                self.set_done_reason(2)
+            else:
+                pass
+        else:
+            pass
 
         # TERMINA SI SE QUEDA SIN PRESUPUESTO #################################
         # verifica si se quedo sin prespuesto
