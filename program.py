@@ -22,6 +22,7 @@ from sklearn.kernel_approximation import RBFSampler
 matplotlib.style.use('ggplot')
 
 
+
 def run(budget, episodes):
 
     # env = gym.envs.make("MountainCarContinuous-v0")
@@ -65,23 +66,64 @@ def run(budget, episodes):
                 self.target = tf.placeholder(dtype=tf.float32, name="target")
 
                 # This is just linear classifier
-                self.mu = tf.contrib.layers.fully_connected(
-                    # convierte un vector de n en una matriz n x 1
+                # self.mu = tf.contrib.layers.fully_connected(
+                #     # convierte un vector de n en una matriz n x 1
+                #     inputs=tf.expand_dims(self.state, 0),
+                #     num_outputs=1,
+                #     activation_fn=None,
+                #     weights_initializer=tf.zeros_initializer)
+                # self.mu = tf.squeeze(self.mu)
+
+                # red neuronal en lugar de clasificador lineal
+                mu_input_layer = tf.contrib.layers.fully_connected(
                     inputs=tf.expand_dims(self.state, 0),
+                    num_outputs=4,
+                    activation_fn=None,
+                    weights_initializer=tf.zeros_initializer)
+
+                mu_hidden_layer = tf.contrib.layers.fully_connected(
+                    inputs=mu_input_layer,
+                    num_outputs=3,
+                    activation_fn=None,
+                    weights_initializer=tf.zeros_initializer)
+
+                mu_output_layer = tf.contrib.layers.fully_connected(
+                    inputs=mu_hidden_layer,
                     num_outputs=1,
                     activation_fn=None,
                     weights_initializer=tf.zeros_initializer)
-                self.mu = tf.squeeze(self.mu)
 
-                self.sigma = tf.contrib.layers.fully_connected(
+                self.mu = tf.squeeze(mu_output_layer)
+
+                # self.sigma = tf.contrib.layers.fully_connected(
+                #     inputs=tf.expand_dims(self.state, 0),
+                #     num_outputs=1,
+                #     activation_fn=None,
+                #     weights_initializer=tf.zeros_initializer)
+                # self.sigma = tf.squeeze(self.sigma)
+
+                # red neuronal en lugar de clasificador lineal
+                sigma_input_layer = tf.contrib.layers.fully_connected(
                     inputs=tf.expand_dims(self.state, 0),
+                    num_outputs=4,
+                    activation_fn=None,
+                    weights_initializer=tf.zeros_initializer)
+
+                sigma_hidden_layer = tf.contrib.layers.fully_connected(
+                    inputs=sigma_input_layer,
+                    num_outputs=3,
+                    activation_fn=None,
+                    weights_initializer=tf.zeros_initializer)
+
+                sigma_output_layer = tf.contrib.layers.fully_connected(
+                    inputs=sigma_hidden_layer,
                     num_outputs=1,
                     activation_fn=None,
                     weights_initializer=tf.zeros_initializer)
 
-                # lo opuesto de expand_dims
-                self.sigma = tf.squeeze(self.sigma)
+                self.sigma = tf.squeeze(sigma_output_layer)
                 self.sigma = tf.nn.softplus(self.sigma) + 1e-5
+
                 # crea una distribucion normal
                 self.normal_dist = tf.contrib.distributions.Normal(self.mu, self.sigma)
                 # muestrea un valor con la distribucion anterior
@@ -182,7 +224,7 @@ def run(budget, episodes):
             An EpisodeStats object with two numpy arrays for episode_lengths and episode_rewards.
         """
 
-        saver = tf.train.Saver()
+
 
         # Keeps track of useful statistics
         stats = plotting.EpisodeStats(
@@ -320,9 +362,11 @@ def run(budget, episodes):
 
     tf.reset_default_graph()
 
-    global_step = tf.Variable(0, name="global_step", trainable=False)
+    global_step = tf.Variable(0, name="global_step")
     policy_estimator = PolicyEstimator(scaler, featurizer, learning_rate=0.001)
     value_estimator = ValueEstimator(scaler, featurizer, learning_rate=0.1)
+
+    saver = tf.train.Saver()
 
     with tf.Session() as sess:
         sess.run(tf.initialize_all_variables())
@@ -330,5 +374,14 @@ def run(budget, episodes):
         # Note, due to randomness in the policy the number of episodes you need varies
         # TODO: Sometimes the algorithm gets stuck, I'm not sure what exactly is happening there.
         stats = actor_critic(env, policy_estimator, value_estimator, episodes, discount_factor=0.95)
+
+    # with tf.Session() as sess:
+    #     sess.run(tf.initialize_all_variables())
+    #     model_path = 'model/100-50.ckpt.index'
+    #     saver.restore(sess, model_path)
+    #
+    #     # Note, due to randomness in the policy the number of episodes you need varies
+    #     # TODO: Sometimes the algorithm gets stuck, I'm not sure what exactly is happening there.
+    #     stats = actor_critic(env, policy_estimator, value_estimator, episodes, discount_factor=0.95)
 
     return stats
