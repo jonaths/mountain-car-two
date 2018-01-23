@@ -63,7 +63,7 @@ def run_episodes(settings):
         stats_array.episode_budget_count[r] = stats.episode_budget_count
 
         print r
-        with open(filename + '.log', 'a') as f:
+        with open(filename+'.log', 'a') as f:
             f.write(log)
 
     # guarda los resultados de los experimentos en un archivo
@@ -86,13 +86,11 @@ def plot(settings):
     plotting.plot_episode_stats(stats_array_loaded, label=filename, smoothing_window=10)
 
 
+for b in budgets:
+    run_episodes({'budget': b, 'a': 1})
+    plot({'budget': b, 'a': 1})
+
 episodes = [50, 100, 150]
 for b in budgets:
-    # corre experimentos
-    run_episodes({'budget': b, 'a': 1})
-    # hace graficas de resultados
-    plot({'budget': b, 'a': 1})
-    # hace graficas de valor
     for ep in episodes:
         plot_value(b, ep)
-
