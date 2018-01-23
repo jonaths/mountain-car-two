@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from collections import namedtuple
 from matplotlib import pyplot as plt
+plt.switch_backend('agg')
 import sys
 
 EpisodeStats = namedtuple(

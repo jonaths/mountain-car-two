@@ -1,8 +1,10 @@
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
+plt.switch_backend('agg')
 from matplotlib import cm
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 import numpy as np
+import sys
 
 
 def plot_value(b, ep):
@@ -26,7 +28,7 @@ def plot_value(b, ep):
 
     print budgets_to_print
 
-    unfold_index = 20
+    unfold_index = 40
 
     for b in budgets_to_print:
         filter = arr[:, 0] == b

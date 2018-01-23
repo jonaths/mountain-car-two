@@ -6,3 +6,5 @@ X   Si          | Si         | Si            | Si                | No
     Si          | No         | No            | Si                | No
 
 Lineal en valor y mu. Constante en sigma.
+
+Aprende. Al parecer le falta mas tiempo para que determine por cual salir y probar con menos presupuesto?

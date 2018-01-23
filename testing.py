@@ -77,7 +77,7 @@ def run_episodes(settings):
 
 
 for b in budgets:
-    run_episodes({'budget': b, 'a': 1})
+   run_episodes({'budget': b, 'a': 1})
 
 
 def plot(settings):
@@ -91,10 +91,10 @@ def plot(settings):
 
 
 for b in budgets:
-    plot({'budget': b, 'a': 1})
+   plot({'budget': b, 'a': 1})
 
 
-# episodes = [100, 500, 950]
-# for b in budgets:
-#     for ep in episodes:
-#         plot_value(b, ep)
+episodes = [50, 75]
+for b in budgets:
+    for ep in episodes:
+        plot_value(b, ep)
