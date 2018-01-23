@@ -66,34 +66,34 @@ def run(budget, episodes):
                 self.target = tf.placeholder(dtype=tf.float32, name="target")
 
                 # Clasificador lineal ###############################
-                self.mu = tf.contrib.layers.fully_connected(
-                    # convierte un vector de n en una matriz n x 1
-                    inputs=tf.expand_dims(self.state, 0),
-                    num_outputs=1,
-                    activation_fn=None,
-                    weights_initializer=tf.zeros_initializer)
-                self.mu = tf.squeeze(self.mu)
-                ######################################################
-
-                # Red neuronal #######################################
-                # mu_input_layer = tf.contrib.layers.fully_connected(
+                # self.mu = tf.contrib.layers.fully_connected(
+                #     # convierte un vector de n en una matriz n x 1
                 #     inputs=tf.expand_dims(self.state, 0),
-                #     num_outputs=8,
-                #     activation_fn=None,
-                #     weights_initializer=tf.zeros_initializer)
-                #
-                # mu_hidden_layer = tf.contrib.layers.fully_connected(
-                #     inputs=mu_input_layer,
-                #     num_outputs=4,
-                #     activation_fn=None,
-                #     weights_initializer=tf.zeros_initializer)
-                #
-                # mu_output_layer = tf.contrib.layers.fully_connected(
-                #     inputs=mu_hidden_layer,
                 #     num_outputs=1,
                 #     activation_fn=None,
                 #     weights_initializer=tf.zeros_initializer)
-                # self.mu = tf.squeeze(mu_output_layer)
+                # self.mu = tf.squeeze(self.mu)
+                ######################################################
+
+                # Red neuronal #######################################
+                mu_input_layer = tf.contrib.layers.fully_connected(
+                    inputs=tf.expand_dims(self.state, 0),
+                    num_outputs=8,
+                    activation_fn=tf.nn.relu,
+                    weights_initializer=tf.zeros_initializer)
+
+                mu_hidden_layer = tf.contrib.layers.fully_connected(
+                    inputs=mu_input_layer,
+                    num_outputs=4,
+                    activation_fn=tf.nn.relu,
+                    weights_initializer=tf.zeros_initializer)
+
+                mu_output_layer = tf.contrib.layers.fully_connected(
+                    inputs=mu_hidden_layer,
+                    num_outputs=1,
+                    activation_fn=None,
+                    weights_initializer=tf.zeros_initializer)
+                self.mu = tf.squeeze(mu_output_layer)
                 ######################################################
 
                 # Clasificador lineal ##################################
@@ -174,29 +174,29 @@ def run(budget, episodes):
                 self.target = tf.placeholder(dtype=tf.float32, name="target")
 
                 # This is just linear classifier
-                self.output_layer = tf.contrib.layers.fully_connected(
-                    inputs=tf.expand_dims(self.state, 0),
-                    num_outputs=1,
-                    activation_fn=None,
-                    weights_initializer=tf.zeros_initializer)
-
-                # input_layer = tf.contrib.layers.fully_connected(
-                #     inputs=tf.expand_dims(self.state, 0),
-                #     num_outputs=8,
-                #     activation_fn=None,
-                #     weights_initializer=tf.zeros_initializer)
-                #
-                # hidden_layer = tf.contrib.layers.fully_connected(
-                #     inputs=input_layer,
-                #     num_outputs=4,
-                #     activation_fn=None,
-                #     weights_initializer=tf.zeros_initializer)
-                #
                 # self.output_layer = tf.contrib.layers.fully_connected(
-                #     inputs=hidden_layer,
+                #     inputs=tf.expand_dims(self.state, 0),
                 #     num_outputs=1,
                 #     activation_fn=None,
                 #     weights_initializer=tf.zeros_initializer)
+
+                input_layer = tf.contrib.layers.fully_connected(
+                    inputs=tf.expand_dims(self.state, 0),
+                    num_outputs=8,
+                    activation_fn=tf.nn.relu,
+                    weights_initializer=tf.zeros_initializer)
+
+                hidden_layer = tf.contrib.layers.fully_connected(
+                    inputs=input_layer,
+                    num_outputs=4,
+                    activation_fn=tf.nn.relu,
+                    weights_initializer=tf.zeros_initializer)
+
+                self.output_layer = tf.contrib.layers.fully_connected(
+                    inputs=hidden_layer,
+                    num_outputs=1,
+                    activation_fn=None,
+                    weights_initializer=tf.zeros_initializer)
 
                 self.value_estimate = tf.squeeze(self.output_layer)
                 self.loss = tf.squared_difference(self.value_estimate, self.target)
