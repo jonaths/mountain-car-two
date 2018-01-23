@@ -302,7 +302,7 @@ def run(budget, episodes):
             # agrega el total gastado para el episodio
             stats.episode_spent[i_episode] = env.calculate_spent()
 
-            if i_episode % 25 == 0:
+            if i_episode % 50 == 0:
                 save_path = saver.save(sess, "model/"+str(budget)+"-"+str(i_episode)+".ckpt")
 
                 # a partir de aqui guarda la funcion de valor para

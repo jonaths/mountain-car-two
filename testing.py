@@ -5,9 +5,9 @@ import numpy as np
 import sys
 import pandas as pd
 
-num_episodes = 100
-budgets = [100, 60]
-reps = 1
+num_episodes = 200
+budgets = [100, 60, 40]
+reps = 2
 
 results = []
 
@@ -94,7 +94,7 @@ for b in budgets:
    plot({'budget': b, 'a': 1})
 
 
-episodes = [50, 75]
+episodes = [50, 100, 150]
 for b in budgets:
     for ep in episodes:
         plot_value(b, ep)
