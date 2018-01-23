@@ -5,4 +5,4 @@
 X   Si          | Si         | Si            | Si                | No
     Si          | No         | No            | Si                | No
 
-Exp3.
+Lineal en valor y mu. Constante en sigma. 

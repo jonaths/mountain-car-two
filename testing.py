@@ -5,9 +5,9 @@ import numpy as np
 import sys
 import pandas as pd
 
-num_episodes = 500
+num_episodes = 100
 budgets = [100, 60]
-reps = 2
+reps = 1
 
 results = []
 
@@ -54,13 +54,17 @@ def run_episodes(settings):
 
     # repite el experimento reps veces
     for r in range(reps):
-        stats = run(settings['budget'], num_episodes)
+        stats, log = run(settings['budget'], num_episodes)
 
         stats_array.episode_lengths[r] = stats.episode_lengths
         stats_array.episode_rewards[r] = stats.episode_rewards
         stats_array.episode_shaped_rewards[r] = stats.episode_shaped_rewards
         stats_array.episode_spent[r] = stats.episode_spent
         stats_array.episode_budget_count[r] = stats.episode_budget_count
+
+        print r
+        with open(filename+'.log', 'a') as f:
+            f.write(log)
 
     # guarda los resultados de los experimentos en un archivo
     to_save = np.array(
