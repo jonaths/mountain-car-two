@@ -93,6 +93,6 @@ for b in budgets:
     # hace graficas de resultados
     plot({'budget': b, 'a': 1})
     # hace graficas de valor
-    for b in budgets:
-        for ep in episodes:
-            plot_value(b, ep)
+    for ep in episodes:
+        plot_value(b, ep)
+
