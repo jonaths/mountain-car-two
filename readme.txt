@@ -5,6 +5,5 @@
 X   Si          | Si         | Si            | Si                | No
     Si          | No         | No            | Si                | No
 
-Lineal en valor y mu. Constante en sigma.
-
-Aprende. Al parecer le falta mas tiempo para que determine por cual salir y probar con menos presupuesto?
+Lineal en valor y mu. Constante en sigma y aprendiaje lineal en mu y el valor. Se aumentaron los presupuestos de
+prueba y las repeticiones.
