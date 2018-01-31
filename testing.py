@@ -1,12 +1,13 @@
 from program import run
 from lib import plotting
+from lib import nested_plotting
 from lib.plot_value import plot_value
 import numpy as np
 import sys
 import pandas as pd
 
 num_episodes = 500
-budgets = [100, 60, 40, 30, 20]
+budgets = [100, 60, 40, 20, 10]
 reps = 10
 
 results = []
@@ -86,11 +87,25 @@ def plot(settings):
     plotting.plot_episode_stats(stats_array_loaded, label=filename, smoothing_window=10)
 
 
-for b in budgets:
-    run_episodes({'budget': b, 'a': 1})
-    plot({'budget': b, 'a': 1})
+# for b in budgets:
+#     run_episodes({'budget': b, 'a': 1})
+#     plot({'budget': b, 'a': 1})
+#
+# episodes = [50, 100, 150]
+# for b in budgets:
+#     for ep in episodes:
+#         plot_value(b, ep)
 
-episodes = [50, 100, 150]
+stats_list = []
+filename_list = []
 for b in budgets:
-    for ep in episodes:
-        plot_value(b, ep)
+    settings = {'budget': b, 'a': 1}
+    filename = get_filename(settings)
+    filename_list.append(filename)
+    stats_list.append(load_stats(filename))
+print stats_list
+nested_plotting.plot_nested_episode_stats(stats_list, filename_list)
+
+# 1) una salida y presupuesto
+# 2) dos salidas y presupuesto ()
+# 3) dos salidas (una pequena) y presupuesto

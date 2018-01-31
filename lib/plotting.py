@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from collections import namedtuple
 from matplotlib import pyplot as plt
+
 plt.switch_backend('agg')
 import sys
 
@@ -63,8 +64,7 @@ def plot_value_function(V, title="Value Function"):
     plot_surface(X, Y, Z_ace, "{} (Usable Ace)".format(title))
 
 
-def plot_episode_stats(stats, label = 'fig', smoothing_window=50, noshow=False):
-
+def plot_episode_stats(stats, label='fig', smoothing_window=50, noshow=False):
     ####################################################################################
 
     print "Episode Length over Time"
@@ -91,7 +91,8 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=50, noshow=False):
     print stats.episode_rewards
     print stats.episode_rewards.mean(axis=0)
 
-    rewards_smoothed = pd.Series(stats.episode_rewards.mean(axis=0)).rolling(smoothing_window, min_periods=smoothing_window).mean()
+    rewards_smoothed = pd.Series(stats.episode_rewards.mean(axis=0)).rolling(smoothing_window,
+                                                                             min_periods=smoothing_window).mean()
     plt.plot(rewards_smoothed)
     plt.xlabel("Episode")
     plt.ylabel("Episode Reward (Smoothed)")
@@ -112,7 +113,7 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=50, noshow=False):
     print stats.episode_shaped_rewards.mean(axis=0)
 
     shaped_rewards_smoothed = pd.Series(stats.episode_shaped_rewards.mean(axis=0)).rolling(smoothing_window,
-                                                                             min_periods=smoothing_window).mean()
+                                                                                           min_periods=smoothing_window).mean()
     plt.plot(shaped_rewards_smoothed)
     plt.xlabel("Episode")
     plt.ylabel("Episode Shaped Reward (Smoothed)")
@@ -130,7 +131,6 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=50, noshow=False):
     print "Episode per time step"
     print stats.episode_lengths
     print stats.episode_lengths.mean(axis=0)
-
 
     fig3 = plt.figure(figsize=(10, 5))
     plt.plot(np.cumsum(stats.episode_lengths.mean(axis=0)), np.arange(len(stats.episode_lengths[0])))
@@ -172,7 +172,7 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=50, noshow=False):
     for s in range(slices):
         if s == slices - 1:
             data = stats.episode_budget_count[:, int(s * slice_size):int(stats.episode_budget_count.shape[1])]
-        data = stats.episode_budget_count[:, int(s * slice_size):int((s+1) * slice_size)]
+        data = stats.episode_budget_count[:, int(s * slice_size):int((s + 1) * slice_size)]
 
         print s, data.shape
 
@@ -199,10 +199,10 @@ def plot_episode_stats(stats, label = 'fig', smoothing_window=50, noshow=False):
 
         # Plot
         bin_str = '{0:04b}'.format(s)
-        axs[int(bin_str[-2]), int(bin_str[-1])].set_title(str(s+1)+'/'+str(slices))
+        axs[int(bin_str[-2]), int(bin_str[-1])].set_title(str(s + 1) + '/' + str(slices))
         axs[int(bin_str[-2]), int(bin_str[-1])]
         axs[int(bin_str[-2]), int(bin_str[-1])].pie(sizes, explode=explode, labels=renamed_labels, colors=colors,
-                autopct='%1.1f%%', shadow=True, startangle=140, labeldistance=1.3)
+                                                    autopct='%1.1f%%', shadow=True, startangle=140, labeldistance=1.3)
 
     # sys.exit(0)
     #
