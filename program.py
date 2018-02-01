@@ -25,8 +25,8 @@ matplotlib.style.use('ggplot')
 
 def run(budget, episodes):
     # env = gym.envs.make("MountainCarContinuous-v0")
-    env = MyEnv("CartPole-v1", budget)
-    print env.action_space().low[0]
+    env = MyEnv("CartPole-v0", budget)
+    print env.action_space()
 
     # Feature Preprocessing: Normalize to zero mean and unit variance
     # We use a few samples from the observation space to do this
@@ -129,15 +129,22 @@ def run(budget, episodes):
                 # self.sigma = tf.nn.softplus(self.sigma) + 1e-5
 
                 # Valor constante ####################################
-                self.sigma = tf.constant(1, dtype='float32')
+                self.sigma = tf.constant(0.5, dtype='float32')
                 ######################################################
 
                 # crea una distribucion normal
                 self.normal_dist = tf.contrib.distributions.Normal(self.mu, self.sigma)
                 # muestrea un valor con la distribucion anterior
                 self.action = self.normal_dist._sample_n(1)
+
                 # clip
-                self.action = tf.clip_by_value(self.action, env.action_space().low[0], env.action_space().high[0])
+
+                # para mountain car
+                # self.action = tf.clip_by_value(self.action, env.action_space().low[0], env.action_space().high[0])
+
+                # para pendulum
+                self.action = tf.clip_by_value(self.action, 0, +1)[0]
+                self.action = tf.cond(self.action < 0.5, true_fn=lambda: -0.0, false_fn=lambda: +1.0)
 
                 # Loss and train op
                 self.loss = -self.normal_dist.log_prob(self.action) * self.target
@@ -259,6 +266,7 @@ def run(budget, episodes):
 
                 # Take a step
                 action = estimator_policy.predict(state)
+
                 next_state, reward, shaped_reward, done, c = env.step(action, i_episode, t)
 
                 log += np.array_str(action) + ", " + np.array_str(next_state) + ", " + str(reward) + ";\n"

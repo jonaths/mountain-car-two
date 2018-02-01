@@ -42,6 +42,10 @@ class MyEnv:
 
     def step(self, action, i_episode=0, t=1):
 
+
+        action = int(action) * 1
+
+
         # accion de env open ai
         next_state, reward, done, c = self.env.step(action)
 
