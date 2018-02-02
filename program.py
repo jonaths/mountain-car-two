@@ -57,7 +57,7 @@ def run(budget, episodes):
         Policy Function approximator.
         """
 
-        def __init__(self, scaler, featurizer, learning_rate=0.01, scope="policy_estimator"):
+        def __init__(self, scaler, featurizer, learning_rate=0.001, scope="policy_estimator"):
             with tf.variable_scope(scope):
                 self.scaler = scaler
                 self.featurizer = featurizer
@@ -144,7 +144,7 @@ def run(budget, episodes):
 
                 # para pendulum
                 self.action = tf.clip_by_value(self.action, 0, +1)[0]
-                self.action = tf.cond(self.action < 0.5, true_fn=lambda: -0.0, false_fn=lambda: +1.0)
+                self.action = tf.cond(self.action < 0.5, true_fn=lambda: 0.0, false_fn=lambda: +1.0)
 
                 # Loss and train op
                 self.loss = -self.normal_dist.log_prob(self.action) * self.target
@@ -172,7 +172,7 @@ def run(budget, episodes):
         Value Function approximator.
         """
 
-        def __init__(self, scaler, featurizer, learning_rate=0.1, scope="value_estimator"):
+        def __init__(self, scaler, featurizer, learning_rate=0.01, scope="value_estimator"):
             with tf.variable_scope(scope):
                 self.scaler = scaler
                 self.featurizer = featurizer
@@ -262,7 +262,7 @@ def run(budget, episodes):
             # One step in the environment
             for t in itertools.count():
 
-                # env.render()
+                env.render()
 
                 # Take a step
                 action = estimator_policy.predict(state)
@@ -297,9 +297,9 @@ def run(budget, episodes):
                 # Print out which step we're on, useful for debugging.
                 # print("\rStep {} @ Episode {}/{} ({})".format(
                 #     t, i_episode + 1, num_episodes, stats.episode_rewards[i_episode - 1]))
-
+                print " ", reward
                 if done:
-                    print "  ", next_state, reward
+                    print "  ", env.done_reason, reward
                     break
 
                 state = next_state

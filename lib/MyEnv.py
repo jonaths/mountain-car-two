@@ -42,23 +42,17 @@ class MyEnv:
 
     def step(self, action, i_episode=0, t=1):
 
-
         action = int(action) * 1
-
 
         # accion de env open ai
         next_state, reward, done, c = self.env.step(action)
 
-        # RECOMPENSA LA SALIDA NORMAL ########################################
-        # SI (DEFAULT)
         if done:
-            # terminacion por ambiente
-            self.set_done_reason(1)
-        # NO
-        # if done:
-        #     # terminacion por ambiente
-        #     reward = 0
-        #     self.set_done_reason(1)
+            x, x_dot, theta, theta_dot = next_state
+            if x < -2.4 or x > 2.4:
+                self.set_done_reason(1)
+            elif theta < -12 * 2 * math.pi / 360 or theta > 12 * 2 * math.pi / 360:
+                self.set_done_reason(2)
 
         # Actualiza el presupuesto con la recompensa actual
         self.update_budget(reward)
