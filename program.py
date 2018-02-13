@@ -212,7 +212,7 @@ def run(budget, episodes):
             _, loss = sess.run([self.train_op, self.loss], feed_dict)
             return loss
 
-    def actor_critic(env, estimator_policy, estimator_value, num_episodes, discount_factor=1.0):
+    def actor_critic(env, estimator_policy, estimator_value, num_episodes, discount_factor=1.0, update_weights=True):
         """
         Actor Critic Algorithm. Optimizes the policy
         function approximator using policy gradient.
@@ -278,16 +278,20 @@ def run(budget, episodes):
 
                 # Calculate TD Target
                 value_next = estimator_value.predict(next_state)
-                # td_target = reward + discount_factor * value_next
-                td_target = shaped_reward + discount_factor * value_next
-                td_error = td_target - estimator_value.predict(state)
 
-                # Update the value estimator
-                estimator_value.update(state, td_target)
+                # actualiza los pesos de la red
+                if update_weights:
 
-                # Update the policy estimator
-                # using the td error as our advantage estimate
-                estimator_policy.update(state, td_error, action)
+                    # td_target = reward + discount_factor * value_next
+                    td_target = shaped_reward + discount_factor * value_next
+                    td_error = td_target - estimator_value.predict(state)
+
+                    # Update the value estimator
+                    estimator_value.update(state, td_target)
+
+                    # Update the policy estimator
+                    # using the td error as our advantage estimate
+                    estimator_policy.update(state, td_error, action)
 
                 # Print out which step we're on, useful for debugging.
                 # print("\rStep {} @ Episode {}/{} ({})".format(
@@ -302,7 +306,8 @@ def run(budget, episodes):
             # agrega el total gastado para el episodio
             stats.episode_spent[i_episode] = env.calculate_spent()
 
-            if i_episode % 50 == 0:
+            # actualiza una imagen de la funcion de valor
+            if i_episode % 50 == 0 and update_weights:
                 save_path = saver.save(sess, "model/"+str(budget)+"-"+str(i_episode)+".ckpt")
 
                 # a partir de aqui guarda la funcion de valor para
@@ -378,19 +383,19 @@ def run(budget, episodes):
     saver = tf.train.Saver()
 
     with tf.Session() as sess:
-        sess.run(tf.initialize_all_variables())
+        # sess.run(tf.initialize_all_variables())
 
         # Note, due to randomness in the policy the number of episodes you need varies
         # TODO: Sometimes the algorithm gets stuck, I'm not sure what exactly is happening there.
-        stats, log = actor_critic(env, policy_estimator, value_estimator, episodes, discount_factor=0.95)
+        # stats, log = actor_critic(env, policy_estimator, value_estimator, episodes, discount_factor=0.95)
 
     # with tf.Session() as sess:
-    #     sess.run(tf.initialize_all_variables())
-    #     model_path = 'model/100-50.ckpt.index'
+        sess.run(tf.initialize_all_variables())
+        model_path = 'model/'+str(budget)+'-450.ckpt'
     #     saver.restore(sess, model_path)
     #
     #     # Note, due to randomness in the policy the number of episodes you need varies
     #     # TODO: Sometimes the algorithm gets stuck, I'm not sure what exactly is happening there.
-    #     stats = actor_critic(env, policy_estimator, value_estimator, episodes, discount_factor=0.95)
+        stats, log = actor_critic(env, policy_estimator, value_estimator, episodes, discount_factor=0.95, update_weights=False)
 
     return stats, log

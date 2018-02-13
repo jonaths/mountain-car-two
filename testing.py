@@ -6,9 +6,9 @@ import numpy as np
 import sys
 import pandas as pd
 
-num_episodes = 500
+num_episodes = 1
 budgets = [100, 60, 40, 20, 10]
-reps = 10
+reps = 1
 
 results = []
 
